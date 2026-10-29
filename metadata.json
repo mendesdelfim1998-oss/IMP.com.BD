@@ -1,0 +1,8 @@
+{
+  "name": "IMP Bissau - Sistema Integral de Gestão Marítima e Financeira",
+  "description": "Sistema de Gestão Financeira, Faturação, Tesouraria e Controlo Portuário do Instituto Marítimo Portuário da Guiné-Bissau (IMP).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

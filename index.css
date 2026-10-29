@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .pdf-export-container {
+    /* Force standard HEX colors for PDF generation because html2canvas fails on oklch */
+    --color-blue-50: #eff6ff !important;
+    --color-blue-100: #dbeafe !important;
+    --color-blue-200: #bfdbfe !important;
+    --color-blue-300: #93c5fd !important;
+    --color-blue-400: #60a5fa !important;
+    --color-blue-500: #3b82f6 !important;
+    --color-blue-600: #2563eb !important;
+    --color-blue-700: #1d4ed8 !important;
+    --color-blue-800: #1e40af !important;
+    --color-blue-900: #1e3a8a !important;
+    --color-blue-950: #172554 !important;
+
+    --color-emerald-50: #ecfdf5 !important;
+    --color-emerald-100: #d1fae5 !important;
+    --color-emerald-200: #a7f3d0 !important;
+    --color-emerald-300: #6ee7b7 !important;
+    --color-emerald-400: #34d399 !important;
+    --color-emerald-500: #10b981 !important;
+    --color-emerald-600: #059669 !important;
+    --color-emerald-700: #047857 !important;
+    --color-emerald-800: #065f46 !important;
+    --color-emerald-900: #064e3b !important;
+    --color-emerald-950: #022c22 !important;
+
+    --color-amber-50: #fffbeb !important;
+    --color-amber-100: #fef3c7 !important;
+    --color-amber-200: #fde68a !important;
+    --color-amber-300: #fcd34d !important;
+    --color-amber-400: #fbbf24 !important;
+    --color-amber-500: #f59e0b !important;
+    --color-amber-600: #d97706 !important;
+    --color-amber-700: #b45309 !important;
+    --color-amber-800: #92400e !important;
+    --color-amber-900: #78350f !important;
+    --color-amber-950: #451a03 !important;
+
+    --color-rose-50: #fff1f2 !important;
+    --color-rose-100: #ffe4e6 !important;
+    --color-rose-200: #fecdd3 !important;
+    --color-rose-300: #fda4af !important;
+    --color-rose-400: #fb7185 !important;
+    --color-rose-500: #f43f5e !important;
+    --color-rose-600: #e11d48 !important;
+    --color-rose-700: #be123c !important;
+    --color-rose-800: #9f1239 !important;
+    --color-rose-900: #881337 !important;
+    --color-rose-950: #4c0519 !important;
+
+    --color-slate-50: #f8fafc !important;
+    --color-slate-100: #f1f5f9 !important;
+    --color-slate-200: #e2e8f0 !important;
+    --color-slate-300: #cbd5e1 !important;
+    --color-slate-400: #94a3b8 !important;
+    --color-slate-500: #64748b !important;
+    --color-slate-600: #475569 !important;
+    --color-slate-700: #334155 !important;
+    --color-slate-800: #1e293b !important;
+    --color-slate-900: #0f172a !important;
+    --color-slate-950: #020617 !important;
+    
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Specific fix for text-colors and border-colors inside pdf-export-container */
+  .pdf-export-container * {
+    border-color: #e2e8f0 !important; /* slate-200 fallback */
+  }
+}
+
+/* ==========================================================================
+   OFFICIAL PRINT STYLES (A4 & 80MM THERMAL RECEIPT PRINTERS)
+   ========================================================================== */
+@media print {
+  /* Hide all interactive app elements and chrome */
+  nav,
+  header,
+  aside,
+  footer,
+  .no-print,
+  button,
+  input,
+  select,
+  textarea,
+  .modal-action-bar,
+  #app-sidebar,
+  #app-header {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    font-size: 11pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset any modal backdrops or fixed viewport constraints */
+  .fixed,
+  .fixed.inset-0,
+  div[class*="backdrop-blur"],
+  div[class*="overflow-hidden"],
+  div[class*="max-h-"] {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hide everything on the page by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Make only the active printable document visible */
+  #printable-document,
+  #printable-document *,
+  .printable-document,
+  .printable-document *,
+  .printable-area,
+  .printable-area * {
+    visibility: visible !important;
+  }
+
+  /* Position the printable document cleanly on physical A4 paper */
+  #printable-document,
+  .printable-document,
+  .printable-area {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Ensure colors, emblems, badges and borders print vividly */
+  #printable-document,
+  #printable-document * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Special rule for 80mm POS Thermal Printers */
+  .printable-thermal {
+    max-width: 78mm !important;
+    width: 78mm !important;
+    padding: 2mm !important;
+    font-size: 9pt !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 6mm;
+  }
+}
+
+@media screen {
+  .hidden-on-screen {
+    position: absolute !important;
+    left: -99999px !important;
+    top: -99999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+@media print {
+  .hidden-on-screen {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    z-index: 99999 !important;
+  }
+}
+
